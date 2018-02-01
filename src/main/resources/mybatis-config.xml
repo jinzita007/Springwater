@@ -8,7 +8,7 @@
 
     <!--别名===>>扫描内容所有的模型类-->
     <typeAliases>
-        <package name="com.zyl.dao"/>
+        <package name="com.zyl.water.dao"/>
     </typeAliases>
 
 </configuration>
