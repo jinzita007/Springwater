@@ -51,9 +51,23 @@ public class UserService {
         userMapper.addUser(user);
     }
 
+    /**
+     * 更新用户名
+     * @param user
+     */
     public void updateUser(User user) {
 
         userMapper.updateUser(user);
+    }
+
+    /**
+     * 删除用户名
+     * @param id
+     */
+    public void removeUser(Long id) {
+
+        userMapper.removeUser(id);
+
     }
 
 
