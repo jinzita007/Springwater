@@ -20,4 +20,11 @@ public interface UserMapper {
      * @param user
      */
     void addUser(User user);
+
+    /**
+     * 更新一个用户名
+     * @param user
+     */
+    void updateUser(User user);
+
 }
