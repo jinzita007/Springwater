@@ -38,5 +38,16 @@
         #{update_time},
         #{status})
     </insert>
+    <!-- 更新用户名 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE user_member SET
+        username = #{username},
+        password = #{password},
+        email = #{email},
+        mobile = #{mobile},
+        update_time = #{update_time},
+        status = #{status}
+        WHERE id = #{id}
+    </update>
 
 </mapper>
