@@ -11,8 +11,8 @@
         <result column="email" property="email"/>
     </resultMap>
 
-    <!-- 获取一个用户列表 -->
-    <select id="getUsers" resultMap="userResultMap">
+    <!-- 获取所有用户信息 -->
+    <select id="selectAllUser" resultMap="userResultMap">
         SELECT * FROM user_member
     </select>
 </mapper>
