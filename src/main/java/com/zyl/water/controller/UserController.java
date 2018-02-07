@@ -16,7 +16,6 @@ import java.util.List;
  * Created by woaitianwen on 2018/2/1.
  */
 @RestController
-@EnableAutoConfiguration
 @RequestMapping(value="/users")
 public class UserController {
 
@@ -28,8 +27,8 @@ public class UserController {
 
     @ApiOperation(value="获取用户列表", notes="")
     @RequestMapping(value={""}, method= RequestMethod.GET)
-    List<User> getAllUser() {
-        return userMapper.selectAllUser();
+    public Object getAllUser() {
+        return userService.selectAllUser();
     }
 
 
