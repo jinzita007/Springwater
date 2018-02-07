@@ -91,6 +91,16 @@ public class UserController {
 
     }
 
+    /**
+     * 删除用户名
+     * @param id
+     */
+    @ApiOperation(value="删除用户名", notes="删除用户名")
+    @RequestMapping(value = "users/{id}",method = RequestMethod.DELETE)
+    public void removeUser(@PathVariable("id") Long id) {
+        userService.removeUser(id);
+    }
+
 
 
 }
