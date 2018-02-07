@@ -5,27 +5,40 @@ import com.alibaba.fastjson.JSONObject;
 import com.zyl.water.domain.User;
 import com.zyl.water.mapper.UserMapper;
 import com.zyl.water.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-
-import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@WebAppConfiguration
 public class UserControllerTest {
 
     @Autowired
     UserMapper userMapper;
     @Autowired
     UserService userService;
+
+    private MockMvc mvc;
+
+    @Before
+    public void setUp() throws Exception {
+        mvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
+    }
 
     // 添加--持久层接口
     @Test
@@ -37,6 +50,10 @@ public class UserControllerTest {
         System.out.println(JSON.toJSONString(result));
         System.out.println("--------------------结束单元测试1--------------------");
     }
+
+    /**
+     * 测试新增用户
+     */
     @Test
     public void addUserTest() {
         User user = new User();
@@ -75,6 +92,20 @@ public class UserControllerTest {
         System.out.println("--------------------结束单元测试1--------------------");
 
     }
+
+    /**
+     * 测试更新一个用户
+     */
+    @Test
+    public void updateUserTest() throws Exception {
+
+
+    }
+
+
+    /**
+     * 测试获取本地IP
+     */
     @Test
     public void ipTest() {
 
@@ -90,5 +121,6 @@ public class UserControllerTest {
         System.out.println("--------------------结束单元测试1--------------------");
 
     }
+
 
 }
