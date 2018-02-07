@@ -1,4 +1,4 @@
-package com.zyl.water.dao;
+package com.zyl.water.domain;
 
 /**
  * Created by woaitianwen on 2018/2/1.
