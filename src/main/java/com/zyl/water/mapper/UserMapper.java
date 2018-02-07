@@ -27,4 +27,10 @@ public interface UserMapper {
      */
     void updateUser(User user);
 
+    /**
+     * 删除用户名
+     * @param id
+     */
+    void removeUser(Long id);
+
 }
