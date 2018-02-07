@@ -1,5 +1,10 @@
 package com.zyl.water.domain;
 
+import io.swagger.models.auth.In;
+
+import java.math.BigInteger;
+import java.sql.Timestamp;
+
 /**
  * Created by woaitianwen on 2018/2/1.
  */
@@ -10,34 +15,13 @@ public class User {
     private String password;         //密码
     private String email;            //用户电子邮箱
     private String mobile;           //用户手机
-    private String reg_time;         //注册时间
+    private Timestamp reg_time;         //注册时间
     private String reg_ip;           //注册IP
-    private String last_login_time;  //最后登录时间
+    private Timestamp last_login_time;  //最后登录时间
     private String last_login_ip;    //最后登录IP
-    private String update_time;      //更新时间
+    private Timestamp update_time;      //更新时间
     private Boolean status;           //用户状态
 
-    //无参数构造器
-    public User() {
-        super();
-    }
-    //有参数构造器
-    public User(Long id, String username, String password, String email, String mobile, String reg_time, String reg_ip, String last_login_time, String last_login_ip, String update_time, Boolean status) {
-        super();
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.mobile = mobile;
-        this.reg_time = reg_time;
-        this.reg_ip = reg_ip;
-        this.last_login_time = last_login_time;
-        this.last_login_ip = last_login_ip;
-        this.update_time = update_time;
-        this.status = status;
-    }
-
-    // setter和getter方法
     public Long getId() {
         return id;
     }
@@ -78,11 +62,11 @@ public class User {
         this.mobile = mobile;
     }
 
-    public String getReg_time() {
+    public Timestamp getReg_time() {
         return reg_time;
     }
 
-    public void setReg_time(String reg_time) {
+    public void setReg_time(Timestamp reg_time) {
         this.reg_time = reg_time;
     }
 
@@ -94,11 +78,11 @@ public class User {
         this.reg_ip = reg_ip;
     }
 
-    public String getLast_login_time() {
+    public Timestamp getLast_login_time() {
         return last_login_time;
     }
 
-    public void setLast_login_time(String last_login_time) {
+    public void setLast_login_time(Timestamp last_login_time) {
         this.last_login_time = last_login_time;
     }
 
@@ -110,11 +94,11 @@ public class User {
         this.last_login_ip = last_login_ip;
     }
 
-    public String getUpdate_time() {
+    public Timestamp getUpdate_time() {
         return update_time;
     }
 
-    public void setUpdate_time(String update_time) {
+    public void setUpdate_time(Timestamp update_time) {
         this.update_time = update_time;
     }
 
@@ -124,23 +108,6 @@ public class User {
 
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", reg_time='" + reg_time + '\'' +
-                ", reg_ip='" + reg_ip + '\'' +
-                ", last_login_time='" + last_login_time + '\'' +
-                ", last_login_ip='" + last_login_ip + '\'' +
-                ", update_time='" + update_time + '\'' +
-                ", status=" + status +
-                '}';
     }
 }
 

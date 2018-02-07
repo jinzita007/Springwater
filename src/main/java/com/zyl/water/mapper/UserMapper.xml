@@ -8,11 +8,35 @@
         <result column="username" property="username"/>
         <result column="password" property="password"/>
         <result column="email" property="email"/>
+        <result column="mobile" property="mobile"/>
+        <result column="reg_time" property="reg_time"/>
+        <result column="reg_ip" property="reg_ip"/>
+        <result column="last_login_time" property="last_login_time"/>
+        <result column="last_login_ip" property="last_login_ip"/>
+        <result column="update_time" property="update_time"/>
+        <result column="status" property="status"/>
+
     </resultMap>
 
     <!-- 获取所有用户信息 -->
     <select id="findAll" resultMap="BaseResultMap">
         SELECT * FROM user_member
     </select>
+
+    <!-- 新增用户名 -->
+    <!--ALTER TABLE `user_member` CHANGE `reg_time` `reg_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间';-->
+    <insert id="addUser" parameterType="User">
+        INSERT INTO user_member (username,password,email,mobile,reg_time,reg_ip,last_login_time,last_login_ip,update_time,status) VALUE (
+        #{username},
+        #{password},
+        #{email},
+        #{mobile},
+        #{reg_time},
+        #{reg_ip},
+        #{last_login_time},
+        #{last_login_ip},
+        #{update_time},
+        #{status})
+    </insert>
 
 </mapper>

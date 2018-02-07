@@ -25,10 +25,15 @@ public class UserController {
 
     @ApiOperation(value="获取用户列表", notes="获取用户列表")
     @RequestMapping(value = "users", method = RequestMethod.GET)
-    public List<User> getAllUser() {
+    public List<User> findAll() {
+        return userService.findAll();
+    }
 
-        return userMapper.findAll();
+    @ApiOperation(value="新增一个用户", notes="新增一个用户")
+    @RequestMapping(value = "users", method = RequestMethod.POST)
+    public void addUser(User user) {
 
+        userService.addUser(user);
     }
 
 }

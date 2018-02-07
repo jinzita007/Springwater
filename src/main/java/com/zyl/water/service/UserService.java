@@ -13,8 +13,18 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public List<User> selectAllUser() {
+    /**
+     * 查询所有用户信息
+     * @return
+     */
+    public List<User> findAll() {
 
         return userMapper.findAll();
     }
+
+    public void addUser(User user) {
+        userMapper.addUser(user);
+    }
+
+
 }
