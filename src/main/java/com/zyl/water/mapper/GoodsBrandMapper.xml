@@ -51,18 +51,32 @@
         ORDER BY brand_id DESC
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!-- 插入商品品牌 -->
+  <insert id="insert" parameterType="com.zyl.water.domain.GoodsBrand" >
+    insert into goods_brand (
+    brand_id,
+    brand_name,
+    brand_titile,
+    brand_rebate,
+    status,
+    sort,
+    brand_img)
+    values (
+    #{brandId,jdbcType=INTEGER},
+    #{brandName,jdbcType=VARCHAR},
+    #{brandTitile,jdbcType=VARCHAR},
+    #{brandRebate,jdbcType=VARCHAR},
+    #{status,jdbcType=INTEGER},
+    #{sort,jdbcType=INTEGER},
+    #{brandImg,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from goods_brand
     where brand_id = #{brandId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zyl.water.domain.GoodsBrand" >
-    insert into goods_brand (brand_id, brand_name, brand_titile, 
-      brand_rebate, status, sort, 
-      brand_img)
-    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{brandTitile,jdbcType=VARCHAR}, 
-      #{brandRebate,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
-      #{brandImg,jdbcType=LONGVARCHAR})
-  </insert>
+
+
   <insert id="insertSelective" parameterType="com.zyl.water.domain.GoodsBrand" >
     insert into goods_brand
     <trim prefix="(" suffix=")" suffixOverrides="," >
