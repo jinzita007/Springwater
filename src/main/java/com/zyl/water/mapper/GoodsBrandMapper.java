@@ -13,7 +13,6 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface GoodsBrandMapper {
-    int deleteByPrimaryKey(Integer brandId);
 
     int insertSelective(GoodsBrand record);
 
@@ -42,6 +41,13 @@ public interface GoodsBrandMapper {
      * @return
      */
     int insert(GoodsBrand goodsBrand);
+
+    /**
+     * 删除商品品牌
+     * @param brandId
+     * @return
+     */
+    int deleteById(Integer brandId);
 
     GoodsBrand selectByPrimaryKey(Integer brandId);
 
