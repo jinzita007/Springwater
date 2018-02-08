@@ -40,4 +40,13 @@ public class GoodsBrandService {
 
         return goodsBrandMapper.insert(goodsBrand);
     }
+
+    /**
+     * 删除商品品牌
+     * @param brandId
+     * @return
+     */
+    public Object deleteById(Integer brandId) {
+        return goodsBrandMapper.deleteById(brandId);
+    }
 }

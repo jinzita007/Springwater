@@ -8,10 +8,7 @@ import com.zyl.water.mapper.GoodsBrandMapper;
 import com.zyl.water.service.GoodsBrandService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by zhouyulong on 2018/2/8.
@@ -75,4 +72,19 @@ public class GoodsBrandController {
         jsonObject.put("data",goodsBrand);
         return jsonObject;
     }
+
+    /**
+     * 删除商品品牌
+     * @param brandId
+     * @return
+     */
+    @ApiOperation(value="删除商品品牌", notes="删除商品品牌")
+    @RequestMapping(value = "brand/{id}",method = RequestMethod.DELETE)
+    public Object deleteById(@PathVariable("id") Integer brandId) {
+        goodsBrandService.deleteById(brandId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","删除成功");
+        return jsonObject;
+    }
+
 }
