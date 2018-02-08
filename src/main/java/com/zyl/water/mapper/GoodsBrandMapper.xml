@@ -32,6 +32,14 @@
     select count(*) from goods_brand
   </select>
 
+  <!-- 模糊查询商品品牌的记录条总数 -->
+  <select id="fuzzQueryCount" resultType="Integer">
+    select count(*) AS total from goods_brand
+    <where>
+      brand_name LIKE CONCAT('%',#{q},'%')
+    </where>
+  </select>
+
   <!-- 查询所有品牌分类 -->
   <select id="findByPage" resultMap="BaseResultMap">
     select * from goods_brand
