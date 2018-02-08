@@ -30,4 +30,14 @@ public class GoodsBrandService {
         PageHelper.startPage(pageNo, pageSize);
         return goodsBrandMapper.findByPage(q);
     }
+
+    /**
+     * 新增商品品牌
+     * @param goodsBrand
+     * @return
+     */
+    public Object insert(GoodsBrand goodsBrand) {
+
+        return goodsBrandMapper.insert(goodsBrand);
+    }
 }
