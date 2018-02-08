@@ -22,6 +22,13 @@ public interface GoodsBrandMapper {
     int selectCount();
 
     /**
+     * 模糊查询记录总数
+     * @param q
+     * @return
+     */
+    int fuzzQueryCount(@Param("q") String q);
+
+    /**
      * 查询商品品牌--分页
      * @return
      */
