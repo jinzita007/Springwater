@@ -27,8 +27,14 @@
     where brand_id = #{brandId,jdbcType=INTEGER}
   </select>
   <!-- 查询所有品牌分类 -->
-  <select id="selectBybrand" resultMap="BaseResultMap">
+  <select id="findByPage" resultMap="BaseResultMap">
     select * from goods_brand
+    <where>
+      <if test="q!=null">
+        nickname LIKE CONCAT('%',#{q},'%')
+      </if>
+    </where>
+        ORDER BY id DESC
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
