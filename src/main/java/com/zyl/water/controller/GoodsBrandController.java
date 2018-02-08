@@ -2,6 +2,7 @@ package com.zyl.water.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
+import com.zyl.water.domain.Goods;
 import com.zyl.water.domain.GoodsBrand;
 import com.zyl.water.mapper.GoodsBrandMapper;
 import com.zyl.water.service.GoodsBrandService;
@@ -57,6 +58,21 @@ public class GoodsBrandController {
             jsonObject.put("data",goodsBrandPage);
             return jsonObject;
         }
+    }
 
+    /**
+     * 新增商品品牌
+     * @param goodsBrand
+     * @return
+     */
+    @ApiOperation(value="新增商品品牌", notes="新增商品品牌")
+    @RequestMapping(value = "brand",method = RequestMethod.POST)
+    public Object insert(GoodsBrand goodsBrand) {
+
+        goodsBrandService.insert(goodsBrand);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg","新增成功");
+        jsonObject.put("data",goodsBrand);
+        return jsonObject;
     }
 }
