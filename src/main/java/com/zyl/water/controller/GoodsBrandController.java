@@ -27,13 +27,24 @@ public class GoodsBrandController {
     public Object getByPage(@RequestParam(value = "pageNo",  defaultValue = "1")  int pageNo,
                             @RequestParam(value = "pageSize", defaultValue = "3")  int pageSize,
                             String q) {
-        int totalCount = goodsBrandMapper.selectCount();
-        Page<GoodsBrand> goodsBrandPage = goodsBrandService.findByPage(pageNo, pageSize, q);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("msg","查询成功");
-        jsonObject.put("total",totalCount);
-        jsonObject.put("data",goodsBrandPage);
-        return jsonObject;
+
+        if(q!=null) {
+            int total = goodsBrandMapper.fuzzQueryCount(q);
+            Page<GoodsBrand> goodsBrandPage = goodsBrandService.findByPage(pageNo, pageSize, q);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("msg","模糊查询成功");
+            jsonObject.put("total",total);
+            jsonObject.put("data",goodsBrandPage);
+            return jsonObject;
+        } else {
+            int totalCount = goodsBrandMapper.selectCount();
+            Page<GoodsBrand> goodsBrandPage = goodsBrandService.findByPage(pageNo, pageSize, q);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("msg","查询成功");
+            jsonObject.put("total",totalCount);
+            jsonObject.put("data",goodsBrandPage);
+            return jsonObject;
+        }
 
     }
 }
