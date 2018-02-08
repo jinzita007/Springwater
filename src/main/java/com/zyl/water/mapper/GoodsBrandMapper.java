@@ -16,10 +16,16 @@ public interface GoodsBrandMapper {
     int insertSelective(GoodsBrand record);
 
     /**
+     * 商品品牌记录总数
+     * @return
+     */
+    int selectCount();
+
+    /**
      * 查询商品品牌--分页
      * @return
      */
-    Page<GoodsBrand> findByPage();
+    Page<GoodsBrand> findByPage(@Param("q") String q);
 
 
     GoodsBrand selectByPrimaryKey(Integer brandId);
