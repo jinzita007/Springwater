@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/**
+ * Created by zhouyulong on 2018/2/8.
+ *
+ * 商品品牌分类--控制层
+ *
+ */
 @RestController
 public class GoodsBrandController {
 
@@ -22,7 +27,14 @@ public class GoodsBrandController {
     @Autowired
     GoodsBrandService goodsBrandService;
 
-    @ApiOperation(value="查询所有商品品牌", notes="查询所有商品品牌")
+    /**
+     * 查询商品品牌
+     * @param pageNo
+     * @param pageSize
+     * @param q
+     * @return
+     */
+    @ApiOperation(value="查询商品品牌", notes="查询商品品牌")
     @RequestMapping(value = "brand",method = RequestMethod.GET)
     public Object getByPage(@RequestParam(value = "pageNo",  defaultValue = "1")  int pageNo,
                             @RequestParam(value = "pageSize", defaultValue = "3")  int pageSize,

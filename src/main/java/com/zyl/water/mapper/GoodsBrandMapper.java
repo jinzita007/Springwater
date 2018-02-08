@@ -5,13 +5,15 @@ import com.zyl.water.domain.GoodsBrand;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
+/**
+ * Created by zhouyulong on 2018/2/8.
+ *
+ * 商品品牌分类--持久层接口类
+ *
+ */
 @Mapper
 public interface GoodsBrandMapper {
     int deleteByPrimaryKey(Integer brandId);
-
-    int insert(GoodsBrand record);
 
     int insertSelective(GoodsBrand record);
 
@@ -34,6 +36,12 @@ public interface GoodsBrandMapper {
      */
     Page<GoodsBrand> findByPage(@Param("q") String q);
 
+    /**
+     * 新增商品品牌
+     * @param goodsBrand
+     * @return
+     */
+    int insert(GoodsBrand goodsBrand);
 
     GoodsBrand selectByPrimaryKey(Integer brandId);
 

@@ -7,8 +7,13 @@ import com.zyl.water.mapper.GoodsBrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
+/**
+ * Created by zhouyulong on 2018/2/8.
+ *
+ * 商品品牌分类--业务层实现类
+ *
+ */
 @Service
 public class GoodsBrandService {
 
