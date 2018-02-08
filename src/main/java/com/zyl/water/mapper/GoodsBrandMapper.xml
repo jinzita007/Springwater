@@ -37,10 +37,10 @@
     select * from goods_brand
     <where>
       <if test="q!=null">
-        nickname LIKE CONCAT('%',#{q},'%')
+        brand_name LIKE CONCAT('%',#{q},'%')
       </if>
     </where>
-        ORDER BY id DESC
+        ORDER BY brand_id DESC
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

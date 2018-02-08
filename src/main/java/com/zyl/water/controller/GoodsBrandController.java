@@ -25,9 +25,10 @@ public class GoodsBrandController {
     @ApiOperation(value="查询所有商品品牌", notes="查询所有商品品牌")
     @RequestMapping(value = "brand",method = RequestMethod.GET)
     public Object getByPage(@RequestParam(value = "pageNo",  defaultValue = "1")  int pageNo,
-                            @RequestParam(value = "pageSize", defaultValue = "3")  int pageSize) {
+                            @RequestParam(value = "pageSize", defaultValue = "3")  int pageSize,
+                            String q) {
         int totalCount = goodsBrandMapper.selectCount();
-        Page<GoodsBrand> goodsBrandPage = goodsBrandService.findByPage(pageNo, pageSize);
+        Page<GoodsBrand> goodsBrandPage = goodsBrandService.findByPage(pageNo, pageSize, q);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("msg","查询成功");
         jsonObject.put("total",totalCount);

@@ -21,8 +21,8 @@ public class GoodsBrandService {
      * @param pageSize 每页大小
      * @return
      */
-    public Page<GoodsBrand> findByPage(int pageNo, int pageSize) {
+    public Page<GoodsBrand> findByPage(int pageNo, int pageSize, String q) {
         PageHelper.startPage(pageNo, pageSize);
-        return goodsBrandMapper.findByPage();
+        return goodsBrandMapper.findByPage(q);
     }
 }
