@@ -37,6 +37,9 @@ public class UploadController {
     @Value("${file.server.host}")
     private String host;
 
+    @Autowired
+    private QiniuUtil qiniuUtil;
+
     /**
      * 第一种上传方式
      * @param file
@@ -77,25 +80,22 @@ public class UploadController {
     }
 
     /**
-     * 上传文件到七牛云存储
-     * @param
+     * 第二种方式上传文件到七牛云存储
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/uploadqiniu", method = RequestMethod.POST)
-    public Response<String> upload(@RequestParam MultipartFile file){
+    public Response<String> uploads(@RequestParam MultipartFile file) {
         Response<String> resp = new Response<>(ResponseEnum.Success);
         try {
             InputStream io = file.getInputStream();
-            Qiniu qiniu = QiniuUtil.upload(io);
+            Qiniu qiniu = qiniuUtil.uploads(io);
             resp.setData(host + qiniu.getKey());
         }catch(Exception e){
             resp.setResponse(ResponseEnum.Fail);
         }
         return resp;
     }
-
-
 
     /*@RequestMapping(value = "/uploadimg", method = RequestMethod.POST)
     public Map<String, Object> uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
