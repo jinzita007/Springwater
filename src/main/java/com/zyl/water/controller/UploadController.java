@@ -97,10 +97,12 @@ public class UploadController {
             Map<String, Object> map = new HashMap<>();
             map.put("code","0");
             map.put("msg","上传成功！");
+            map.put("name",qiniu.getKey());
             map.put("url",host + qiniu.getKey());
 
             //插入数据库
             Img img = new Img();
+            img.setName(qiniu.getKey());
             img.setPath(host + qiniu.getKey());
             img.setStatus(true);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -113,6 +115,32 @@ public class UploadController {
             Map<String, Object> map = new HashMap<>();
             map.put("code","1");
             map.put("msg","上传失败！");
+            return map;
+        }
+    }
+
+    /**
+     * 删除七牛云图片
+     * @param key
+     * @return
+     */
+    @RequestMapping(value = "deleteById", method = RequestMethod.DELETE)
+    public Map<String, Object> delete(@RequestParam("filename") String key) {
+        try {
+            Map<String, Object> map = new HashMap<>();
+
+            qiniuUtil.delete(key);
+            imgService.deleteByName(key);
+
+            map.put("code","0");
+            map.put("name",key);
+            map.put("msg","删除成功！");
+            return map;
+
+        }catch(Exception e){
+            Map<String, Object> map = new HashMap<>();
+            map.put("code","1");
+            map.put("msg","删除失败！");
             return map;
         }
     }
