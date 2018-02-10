@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,10 +25,12 @@ import java.util.Map;
 /**
  * 上传文件类
  */
+
 @RestController
 public class UploadController {
 
     private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+
 
     @Autowired
     ImgService imgService;
@@ -85,17 +89,54 @@ public class UploadController {
      * @throws IOException
      */
     @RequestMapping(value = "/uploadqiniu", method = RequestMethod.POST)
-    public Response<String> uploads(@RequestParam MultipartFile file) {
+    public Map<String, Object> uploads(@RequestParam("file") MultipartFile file) {
+        try {
+            InputStream io = file.getInputStream();
+            Qiniu qiniu = qiniuUtil.uploads(io);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("code","0");
+            map.put("msg","上传成功！");
+            map.put("url",host + qiniu.getKey());
+
+            //插入数据库
+            Img img = new Img();
+            img.setPath(host + qiniu.getKey());
+            img.setStatus(true);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            img.setCreatetime(timestamp);
+            imgService.insert(img);
+
+            return map;
+
+        }catch(Exception e){
+            Map<String, Object> map = new HashMap<>();
+            map.put("code","1");
+            map.put("msg","上传失败！");
+            return map;
+        }
+    }
+    /*public Response<String> uploads(@RequestParam("file") MultipartFile file) {
         Response<String> resp = new Response<>(ResponseEnum.Success);
         try {
             InputStream io = file.getInputStream();
             Qiniu qiniu = qiniuUtil.uploads(io);
             resp.setData(host + qiniu.getKey());
+            //插入数据库
+            Img img = new Img();
+            img.setPath(host + qiniu.getKey());
+            img.setStatus(true);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            img.setCreatetime(timestamp);
+
+            imgService.insert(img);
+
         }catch(Exception e){
             resp.setResponse(ResponseEnum.Fail);
         }
         return resp;
-    }
+    }*/
+
 
     /*@RequestMapping(value = "/uploadimg", method = RequestMethod.POST)
     public Map<String, Object> uploadImg(@RequestParam("file") MultipartFile file,HttpServletRequest request) {
