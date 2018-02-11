@@ -49,7 +49,7 @@ public interface GoodsBrandMapper {
      * @param brandId
      * @return
      */
-    
+
     int update(Integer brandId);
     /**
      * 删除商品品牌

@@ -7,6 +7,8 @@ import com.zyl.water.mapper.GoodsBrandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * Created by zhouyulong on 2018/2/8.
@@ -42,11 +44,28 @@ public class GoodsBrandService {
     }
 
     /**
+     * 更新商品品牌
+     * @param brandId
+     * @return
+     */
+    public Object update(Integer brandId) {
+        return goodsBrandMapper.update(brandId);
+    }
+
+    /**
      * 删除商品品牌
      * @param brandId
      * @return
      */
     public Object deleteById(Integer brandId) {
         return goodsBrandMapper.deleteById(brandId);
+    }
+
+    /**
+     * 测试
+     * @return
+     */
+    public List<GoodsBrand> selectAll() {
+        return goodsBrandMapper.selectAll();
     }
 }
