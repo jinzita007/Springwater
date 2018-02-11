@@ -43,6 +43,16 @@
     #{status},
     #{createtime})
   </insert>
+  <!-- 更新图片 -->
+  <update id="update" parameterType="Img">
+    update img set
+         name = #{name},
+         path = #{path},
+         status = #{status},
+         createTime = #{createtime}
+         where name = #{key}
+  </update>
+
   <insert id="insertSelective" parameterType="com.zyl.water.domain.Img" >
     insert into img
     <trim prefix="(" suffix=")" suffixOverrides="," >

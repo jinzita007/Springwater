@@ -9,6 +9,8 @@ public interface ImgMapper {
 
     int insert(Img img);
 
+    int update(String key);
+
     int deleteByName(String key);
 
     /*int insertSelective(Img record);

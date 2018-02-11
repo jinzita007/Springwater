@@ -14,9 +14,21 @@ public class ImgService {
     @Autowired
     ImgMapper imgMapper;
 
+    /**
+     * 插入图片
+     * @param img
+     */
     public void insert(Img img) {
         imgMapper.insert(img);
         System.out.println(img.getId());
+    }
+
+    /**
+     * 更新图片
+     * @param key
+     */
+    public void update(String key) {
+        imgMapper.update(key);
     }
 
     /**
