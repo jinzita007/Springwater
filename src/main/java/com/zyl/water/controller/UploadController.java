@@ -128,7 +128,7 @@ public class UploadController {
      * @return
      */
     @RequestMapping(value = "deleteById", method = RequestMethod.DELETE)
-    public Map<String, Object> delete(@RequestParam("filename") String key) {
+    public Map<String, Object> delete(@RequestParam("name") String key) {
         try {
             Map<String, Object> map = new HashMap<>();
 
@@ -147,6 +147,8 @@ public class UploadController {
             return map;
         }
     }
+
+
     /*public Response<String> uploads(@RequestParam("file") MultipartFile file) {
         Response<String> resp = new Response<>(ResponseEnum.Success);
         try {
