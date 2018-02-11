@@ -2,7 +2,6 @@ package com.zyl.water.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
-import com.zyl.water.domain.Goods;
 import com.zyl.water.domain.GoodsBrand;
 import com.zyl.water.mapper.GoodsBrandMapper;
 import com.zyl.water.service.GoodsBrandService;
@@ -71,6 +70,35 @@ public class GoodsBrandController {
         jsonObject.put("msg","新增成功");
         jsonObject.put("data",goodsBrand);
         return jsonObject;
+    }
+
+    @ApiOperation(value="更新商品品牌", notes="更新商品品牌")
+    @RequestMapping(value = "brand/{id}",method = RequestMethod.PUT)
+    public Object update(@PathVariable("id") Integer brandId,
+                         /*@RequestParam("brandName") String brandName,
+                         @RequestParam("brandTitile") String brandTitile,
+                         @RequestParam("brandRebate") String brandRebate,
+                         @RequestParam("brandImg") String brandImg,
+                         @RequestParam("status") Integer status,
+                         @RequestParam("sort") Integer sort*/
+                         @RequestBody GoodsBrand goodsBrand
+                         ) {
+        /*GoodsBrand goodsBrand = new GoodsBrand();
+        goodsBrand.setBrandId(brandId);
+        goodsBrand.setBrandName(brandName);
+        goodsBrand.setBrandTitile(brandTitile);
+        goodsBrand.setBrandRebate(brandRebate);
+        goodsBrand.setBrandImg(brandImg);
+        goodsBrand.setStatus(status);
+        goodsBrand.setSort(sort);*/
+
+        JSONObject jsonObject = new JSONObject();
+
+        goodsBrandService.update(goodsBrand);
+        jsonObject.put("msg","更新成功");
+        jsonObject.put("data",goodsBrand);
+        return jsonObject;
+
     }
 
     /**
