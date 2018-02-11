@@ -11,11 +11,13 @@ public class GoodsBrand {
 
     private String brandRebate;
 
+    private String brandImg;
+
     private Integer status;
 
     private Integer sort;
 
-    private String brandImg;
+
 
     private List<Img> img;
 
@@ -59,6 +61,14 @@ public class GoodsBrand {
         this.brandRebate = brandRebate == null ? null : brandRebate.trim();
     }
 
+    public String getBrandImg() {
+        return brandImg;
+    }
+
+    public void setBrandImg(String brandImg) {
+        this.brandImg = brandImg == null ? null : brandImg.trim();
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -75,11 +85,5 @@ public class GoodsBrand {
         this.sort = sort;
     }
 
-    public String getBrandImg() {
-        return brandImg;
-    }
 
-    public void setBrandImg(String brandImg) {
-        this.brandImg = brandImg == null ? null : brandImg.trim();
-    }
 }

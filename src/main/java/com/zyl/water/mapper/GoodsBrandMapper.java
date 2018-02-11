@@ -46,7 +46,7 @@ public interface GoodsBrandMapper {
 
     /**
      * 更新商品品牌
-     * @param brandId
+     * @param goodsBrand
      * @return
      */
 

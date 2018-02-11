@@ -72,6 +72,12 @@ public class GoodsBrandController {
         return jsonObject;
     }
 
+    /**
+     * 更新商品品牌
+     * @param brandId
+     * @param goodsBrand
+     * @return
+     */
     @ApiOperation(value="更新商品品牌", notes="更新商品品牌")
     @RequestMapping(value = "brand/{id}",method = RequestMethod.PUT)
     public Object update(@PathVariable("id") Integer brandId,
