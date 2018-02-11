@@ -74,7 +74,7 @@
     brand_rebate = #{brandRebate},
     brand_img = #{brandImg},
     status = #{status},
-    sor = #{sort}
+    sort = #{sort}
     where brand_id = #{brandId}
   </update>
 

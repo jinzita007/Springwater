@@ -45,11 +45,11 @@ public class GoodsBrandService {
 
     /**
      * 更新商品品牌
-     * @param brandId
+     * @param goodsBrand
      * @return
      */
-    public Object update(Integer brandId) {
-        return goodsBrandMapper.update(brandId);
+    public Object update(GoodsBrand goodsBrand) {
+        return goodsBrandMapper.update(goodsBrand);
     }
 
     /**

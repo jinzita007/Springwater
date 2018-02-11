@@ -50,7 +50,7 @@ public interface GoodsBrandMapper {
      * @return
      */
 
-    int update(Integer brandId);
+    int update(GoodsBrand goodsBrand);
     /**
      * 删除商品品牌
      * @param brandId
