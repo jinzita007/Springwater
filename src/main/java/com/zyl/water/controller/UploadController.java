@@ -72,6 +72,7 @@ public class UploadController {
             imgService.insert(img);
             Map<String, Object> map = new HashMap<>();
             map.put("msg", "上传成功!");
+            map.put("id",img.getId());
             map.put("url",img);
             return map;
 
@@ -93,21 +94,23 @@ public class UploadController {
         try {
             InputStream io = file.getInputStream();
             Qiniu qiniu = qiniuUtil.uploads(io);
-
-            Map<String, Object> map = new HashMap<>();
-            map.put("code","0");
-            map.put("msg","上传成功！");
-            map.put("name",qiniu.getKey());
-            map.put("url",host + qiniu.getKey());
-
             //插入数据库
             Img img = new Img();
+
+            Map<String, Object> map = new HashMap<>();
+
             img.setName(qiniu.getKey());
             img.setPath(host + qiniu.getKey());
             img.setStatus(true);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             img.setCreatetime(timestamp);
             imgService.insert(img);
+
+            map.put("code","0");
+            map.put("msg","上传成功！");
+            map.put("id",img.getId());
+            map.put("name",qiniu.getKey());
+            map.put("url",host + qiniu.getKey());
 
             return map;
 

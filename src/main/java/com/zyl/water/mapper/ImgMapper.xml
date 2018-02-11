@@ -28,7 +28,8 @@
     where name = #{key}
   </delete>
   <!-- 插入图片 -->
-  <insert id="insert" parameterType="com.zyl.water.domain.Img" >
+  <!-- 这个keyProperty的id就是我们要返回的主键id -->
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="Img" >
     insert into img (
     id,
     name,
