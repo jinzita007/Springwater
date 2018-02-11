@@ -1,4 +1,5 @@
 package com.zyl.water.controller;
+import com.qiniu.common.QiniuException;
 import com.zyl.water.common.enums.ResponseEnum;
 import com.zyl.water.domain.Img;
 import com.zyl.water.domain.Qiniu;
@@ -64,7 +65,7 @@ public class UploadController {
             logger.info(fileName);
 
             Img img = new Img();
-            img.setPath(path+fileName);
+            img.setUrl(path+fileName);
             img.setStatus(true);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             img.setCreatetime(timestamp);
@@ -100,7 +101,7 @@ public class UploadController {
             Map<String, Object> map = new HashMap<>();
 
             img.setName(qiniu.getKey());
-            img.setPath(host + qiniu.getKey());
+            img.setUrl(host + qiniu.getKey());
             img.setStatus(true);
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             img.setCreatetime(timestamp);
@@ -147,6 +148,26 @@ public class UploadController {
             return map;
         }
     }
+
+    /*@RequestMapping(value = "move", method = RequestMethod.PUT)
+    public Map<String, Object> update(
+                                    @PathVariable("fromKey") String fromKey,
+                                    @PathVariable("toKey") String toKey) throws QiniuException {
+        try {
+            Map<String, Object> map = new HashMap<>();
+            qiniuUtil.update(fromKey, toKey);
+            map.put("code","0");
+            map.put("name",fromKey);
+            map.put("msg","更新成功！");
+            return map;
+        }catch(Exception e){
+            Map<String, Object> map = new HashMap<>();
+            map.put("code","1");
+            map.put("msg","更新失败！");
+            return map;
+        }
+
+    }*/
 
 
     /*public Response<String> uploads(@RequestParam("file") MultipartFile file) {

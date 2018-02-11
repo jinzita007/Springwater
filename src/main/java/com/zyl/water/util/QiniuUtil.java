@@ -33,9 +33,33 @@ public class QiniuUtil {
     //默认不指定key的情况下，以文件内容的hash值作为文件名
     String key = null;
 
+    String fromBucket = "picture";
+
+    String fromKey = null;
+
+    String toBucket = "picture";
+
+    String toKey = null;
+
+    /**
+     * 上传资源
+     * @param io 文件名
+     * @return
+     * @throws QiniuException
+     */
     public Qiniu uploads(InputStream io) throws QiniuException {
         Response uploadResp = uploadManager.put(io, key, uploadToken, null, null);
         return JSON.parseObject(uploadResp.bodyString(), Qiniu.class);
+    }
+
+    /**
+     * 移动或者重命名文件
+     * @return
+     * @throws QiniuException
+     */
+    public Qiniu update(String fromKey, String toKey) throws QiniuException{
+        Response changeResp = bucketManager.move(fromBucket, fromKey, toBucket, toKey);
+        return JSON.parseObject(changeResp.bodyString(), Qiniu.class);
     }
 
     /**
