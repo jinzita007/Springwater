@@ -6,12 +6,14 @@
     <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
     <result column="brand_titile" property="brandTitile" jdbcType="VARCHAR" />
     <result column="brand_rebate" property="brandRebate" jdbcType="VARCHAR" />
+    <result column="brand_img" property="brandImg" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
 
     <collection property="img" ofType="Img">
       <id property="id" column="id"/>
-      <result property="path" column="path"/>
+      <result property="name" column="name"/>
+      <result property="url" column="url"/>
     </collection>
 
 
@@ -25,7 +27,7 @@
 
   <!-- 模糊查询商品品牌的记录条总数 -->
   <select id="fuzzQueryCount" resultType="Integer">
-    select count(*) AS total from goods_brand
+    select count(*) AS total from goods_brand as a inner join img as i on a.brand_img = i.id
     <where>
       brand_name LIKE CONCAT('%',#{q},'%')
     </where>
@@ -41,30 +43,40 @@
     </where>
         ORDER BY brand_id DESC
   </select>
-  
+  <!-- 测试 -->
   <select id="selectAll" resultMap="BaseResultMap">
     select * from goods_brand as a inner join img as i on a.brand_img = i.id
   </select>
 
   <!-- 插入商品品牌 -->
   <insert id="insert" parameterType="com.zyl.water.domain.GoodsBrand" >
-    insert into goods_brand (
-    brand_id,
+    insert into goods_brand(
     brand_name,
     brand_titile,
     brand_rebate,
+    brand_img,
     status,
-    sort,
-    brand_img)
-    values (
-    #{brandId,jdbcType=INTEGER},
+    sort)
+    value(
     #{brandName,jdbcType=VARCHAR},
     #{brandTitile,jdbcType=VARCHAR},
     #{brandRebate,jdbcType=VARCHAR},
+    #{brandImg,jdbcType=VARCHAR},
     #{status,jdbcType=INTEGER},
-    #{sort,jdbcType=INTEGER},
-    #{brandImg,jdbcType=LONGVARCHAR})
+    #{sort,jdbcType=INTEGER})
   </insert>
+
+  <!-- 更新商品品牌 -->
+  <update id="update" parameterType="GoodsBrand">
+    update goods_brand set
+    brand_name = #{brandName},
+    brand_titile = #{brandTitile},
+    brand_rebate = #{brandRebate},
+    brand_img = #{brandImg},
+    status = #{status},
+    sor = #{sort}
+    where brand_id = #{brandId}
+  </update>
 
   <delete id="deleteById" parameterType="java.lang.Integer" >
     delete from goods_brand

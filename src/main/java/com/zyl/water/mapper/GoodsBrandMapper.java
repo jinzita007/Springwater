@@ -45,6 +45,13 @@ public interface GoodsBrandMapper {
     int insert(GoodsBrand goodsBrand);
 
     /**
+     * 更新商品品牌
+     * @param brandId
+     * @return
+     */
+    
+    int update(Integer brandId);
+    /**
      * 删除商品品牌
      * @param brandId
      * @return
