@@ -1,5 +1,7 @@
 package com.zyl.water.domain;
 
+import java.util.List;
+
 public class GoodsBrand {
     private Integer brandId;
 
@@ -14,6 +16,16 @@ public class GoodsBrand {
     private Integer sort;
 
     private String brandImg;
+
+    private List<Img> img;
+
+    public List<Img> getImg() {
+        return img;
+    }
+
+    public void setImg(List<Img> img) {
+        this.img = img;
+    }
 
     public Integer getBrandId() {
         return brandId;

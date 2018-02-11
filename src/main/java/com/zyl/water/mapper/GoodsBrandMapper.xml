@@ -8,24 +8,15 @@
     <result column="brand_rebate" property="brandRebate" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="sort" property="sort" jdbcType="INTEGER" />
+
+    <collection property="img" ofType="Img">
+      <id property="id" column="id"/>
+      <result property="path" column="path"/>
+    </collection>
+
+
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zyl.water.domain.GoodsBrand" extends="BaseResultMap" >
-    <result column="brand_img" property="brandImg" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    brand_id, brand_name, brand_titile, brand_rebate, status, sort
-  </sql>
-  <sql id="Blob_Column_List" >
-    brand_img
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from goods_brand
-    where brand_id = #{brandId,jdbcType=INTEGER}
-  </select>
+
 
   <!--商品品牌的记录条总数-->
   <select id="selectCount" resultType="Integer">
@@ -42,13 +33,17 @@
 
   <!-- 查询所有品牌分类 -->
   <select id="findByPage" resultMap="BaseResultMap">
-    select * from goods_brand
+    select * from goods_brand as a inner join img as i on a.brand_img = i.id
     <where>
       <if test="q!=null">
         brand_name LIKE CONCAT('%',#{q},'%')
       </if>
     </where>
         ORDER BY brand_id DESC
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from goods_brand as a inner join img as i on a.brand_img = i.id
   </select>
 
   <!-- 插入商品品牌 -->
@@ -169,4 +164,24 @@
       sort = #{sort,jdbcType=INTEGER}
     where brand_id = #{brandId,jdbcType=INTEGER}
   </update>
+
+
+  <resultMap id="ResultMapWithBLOBs" type="com.zyl.water.domain.GoodsBrand" extends="BaseResultMap" >
+    <result column="brand_img" property="brandImg" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    brand_id, brand_name, brand_titile, brand_rebate, status, sort
+  </sql>
+  <sql id="Blob_Column_List" >
+    brand_img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </select>
 </mapper>

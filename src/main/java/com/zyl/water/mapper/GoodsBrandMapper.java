@@ -5,6 +5,8 @@ import com.zyl.water.domain.GoodsBrand;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Created by zhouyulong on 2018/2/8.
  *
@@ -48,6 +50,12 @@ public interface GoodsBrandMapper {
      * @return
      */
     int deleteById(Integer brandId);
+
+    /**
+     * 测试
+     * @return
+     */
+    List<GoodsBrand> selectAll();
 
     GoodsBrand selectByPrimaryKey(Integer brandId);
 
