@@ -2,7 +2,10 @@ package com.zyl.water.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.zyl.water.domain.GoodsBrand;
 import com.zyl.water.domain.User;
+import com.zyl.water.mapper.GoodsBrandMapper;
 import com.zyl.water.mapper.UserMapper;
 import com.zyl.water.service.UserService;
 import org.junit.Before;
@@ -10,35 +13,35 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+
+import org.springframework.test.context.junit4.SpringRunner;
+
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
+
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@WebAppConfiguration
 public class UserControllerTest {
 
     @Autowired
     UserMapper userMapper;
     @Autowired
+    GoodsBrandMapper goodsBrandMapper;
+    @Autowired
     UserService userService;
 
     private MockMvc mvc;
 
-    @Before
-    public void setUp() throws Exception {
-        mvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
-    }
+
 
     // 添加--持久层接口
     @Test
@@ -102,6 +105,28 @@ public class UserControllerTest {
 
     }
 
+    /**
+     * 查询一个品牌分类ID
+     */
+    @Test
+    public void selectByPrimaryKey() {
+        GoodsBrand result = goodsBrandMapper.selectByPrimaryKey(16);
+        System.out.println("--------------------开始单元测试1--------------------");
+        System.out.println(JSON.toJSONString(result));
+        System.out.println("--------------------结束单元测试1--------------------");
+    }
+
+    /**
+     * 查询所有品牌分类
+     */
+    @Test
+    public void selectBybrand() {
+        Page<GoodsBrand> result = goodsBrandMapper.findByPage("香山");
+        System.out.println("--------------------开始单元测试1--------------------");
+        System.out.println(JSON.toJSONString(result));
+        System.out.println("--------------------结束单元测试1--------------------");
+
+    }
 
     /**
      * 测试获取本地IP

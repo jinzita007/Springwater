@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyl.water.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.zyl.water.domain.Orders" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="order_num" property="orderNum" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="order_deposit" property="orderDeposit" jdbcType="DECIMAL" />
+    <result column="pay_price" property="payPrice" jdbcType="DECIMAL" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="INTEGER" />
+    <result column="bcircle" property="bcircle" jdbcType="INTEGER" />
+    <result column="district" property="district" jdbcType="INTEGER" />
+    <result column="order_address_id" property="orderAddressId" jdbcType="INTEGER" />
+    <result column="is_delivery" property="isDelivery" jdbcType="INTEGER" />
+    <result column="delivery_time" property="deliveryTime" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="goods_gift_id" property="goodsGiftId" jdbcType="INTEGER" />
+    <result column="is_lnvoice" property="isLnvoice" jdbcType="INTEGER" />
+    <result column="lnvoice_title" property="lnvoiceTitle" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="INTEGER" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="trade_price" property="tradePrice" jdbcType="DECIMAL" />
+    <result column="ziyoutong_linshi" property="ziyoutongLinshi" jdbcType="INTEGER" />
+    <result column="ziyoutong" property="ziyoutong" jdbcType="INTEGER" />
+    <result column="order_gift_id" property="orderGiftId" jdbcType="INTEGER" />
+    <result column="one" property="one" jdbcType="INTEGER" />
+    <result column="del" property="del" jdbcType="INTEGER" />
+    <result column="deliver" property="deliver" jdbcType="INTEGER" />
+    <result column="finishtime" property="finishtime" jdbcType="INTEGER" />
+    <result column="bucket" property="bucket" jdbcType="INTEGER" />
+    <result column="share" property="share" jdbcType="BIT" />
+    <result column="youhui" property="youhui" jdbcType="VARCHAR" />
+    <result column="point" property="point" jdbcType="VARCHAR" />
+
+    <!-- 多对一的关系 -->
+    <!-- property: 指的是属性的值, javaType：指的是属性的类型-->
+    <association property="arealist" column="id" javaType="Area">
+      <id column="a_id" property="id" jdbcType="INTEGER"/>
+      <result column="a_name" property="name" jdbcType="VARCHAR"/>
+    </association>
+  </resultMap>
+
+  <!-- 查询未支付订单 -->
+  <select id="findByPage" resultMap="BaseResultMap">
+    select o.*, a.id as a_id, a.name as a_name from orders as o, area as a where o.area = a.id and o.order_status=1
+    order by id desc
+  </select>
+
+  <!-- 查询未支付订单编号或订单ID -->
+  <select id="findById" resultMap="BaseResultMap">
+    select o.*, a.id as a_id, a.name as a_name
+    from orders as o, area as a
+    <where>
+        and o.order_status=1
+      <if test="q != null and q !=''">
+        and CONCAT(o.order_num, o.id) LIKE '%' #{q} '%'
+      </if>
+    </where>
+  </select>
+
+  <!-- 查询已支付订单 -->
+  
+  <!-- 查询正在进行 -->
+  <!-- 查询已完成的订单 -->
+  <!-- 查询退单 -->
+  <!-- 查询已失败的订单 -->
+
+
+
+
+
+  <!--<resultMap id="ResultMapWithBLOBs" type="com.zyl.water.domain.OrdersWithBLOBs" extends="BaseResultMap" >
+    <result column="goods_gift" property="goodsGift" jdbcType="LONGVARCHAR" />
+    <result column="address" property="address" jdbcType="LONGVARCHAR" />
+    <result column="beizhu" property="beizhu" jdbcType="LONGVARCHAR" />
+    <result column="sfbeizhu" property="sfbeizhu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Blob_Column_List" >
+    goods_gift, address, beizhu, sfbeizhu
+  </sql>
+
+
+
+  <insert id="insert" parameterType="com.zyl.water.domain.OrdersWithBLOBs" >
+    insert into orders (id, uid, order_type, 
+      order_num, order_price, order_deposit, 
+      pay_price, pay_type, order_status, 
+      area, bcircle, district, 
+      order_address_id, is_delivery, delivery_time, 
+      coupon_id, goods_gift_id, is_lnvoice, 
+      lnvoice_title, name, phone, 
+      createtime, trade_no, trade_price, 
+      ziyoutong_linshi, ziyoutong, order_gift_id, 
+      one, del, deliver, 
+      finishtime, bucket, share, 
+      youhui, point, goods_gift, 
+      address, beizhu, sfbeizhu
+      )
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, 
+      #{orderNum,jdbcType=VARCHAR}, #{orderPrice,jdbcType=DECIMAL}, #{orderDeposit,jdbcType=DECIMAL}, 
+      #{payPrice,jdbcType=DECIMAL}, #{payType,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, 
+      #{area,jdbcType=INTEGER}, #{bcircle,jdbcType=INTEGER}, #{district,jdbcType=INTEGER}, 
+      #{orderAddressId,jdbcType=INTEGER}, #{isDelivery,jdbcType=INTEGER}, #{deliveryTime,jdbcType=VARCHAR}, 
+      #{couponId,jdbcType=INTEGER}, #{goodsGiftId,jdbcType=INTEGER}, #{isLnvoice,jdbcType=INTEGER}, 
+      #{lnvoiceTitle,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=INTEGER}, #{tradeNo,jdbcType=VARCHAR}, #{tradePrice,jdbcType=DECIMAL}, 
+      #{ziyoutongLinshi,jdbcType=INTEGER}, #{ziyoutong,jdbcType=INTEGER}, #{orderGiftId,jdbcType=INTEGER}, 
+      #{one,jdbcType=INTEGER}, #{del,jdbcType=INTEGER}, #{deliver,jdbcType=INTEGER}, 
+      #{finishtime,jdbcType=INTEGER}, #{bucket,jdbcType=INTEGER}, #{share,jdbcType=BIT}, 
+      #{youhui,jdbcType=VARCHAR}, #{point,jdbcType=VARCHAR}, #{goodsGift,jdbcType=LONGVARCHAR}, 
+      #{address,jdbcType=LONGVARCHAR}, #{beizhu,jdbcType=LONGVARCHAR}, #{sfbeizhu,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyl.water.domain.OrdersWithBLOBs" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="orderDeposit != null" >
+        order_deposit,
+      </if>
+      <if test="payPrice != null" >
+        pay_price,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="bcircle != null" >
+        bcircle,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
+      <if test="orderAddressId != null" >
+        order_address_id,
+      </if>
+      <if test="isDelivery != null" >
+        is_delivery,
+      </if>
+      <if test="deliveryTime != null" >
+        delivery_time,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="goodsGiftId != null" >
+        goods_gift_id,
+      </if>
+      <if test="isLnvoice != null" >
+        is_lnvoice,
+      </if>
+      <if test="lnvoiceTitle != null" >
+        lnvoice_title,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="tradePrice != null" >
+        trade_price,
+      </if>
+      <if test="ziyoutongLinshi != null" >
+        ziyoutong_linshi,
+      </if>
+      <if test="ziyoutong != null" >
+        ziyoutong,
+      </if>
+      <if test="orderGiftId != null" >
+        order_gift_id,
+      </if>
+      <if test="one != null" >
+        one,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+      <if test="deliver != null" >
+        deliver,
+      </if>
+      <if test="finishtime != null" >
+        finishtime,
+      </if>
+      <if test="bucket != null" >
+        bucket,
+      </if>
+      <if test="share != null" >
+        share,
+      </if>
+      <if test="youhui != null" >
+        youhui,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="goodsGift != null" >
+        goods_gift,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="beizhu != null" >
+        beizhu,
+      </if>
+      <if test="sfbeizhu != null" >
+        sfbeizhu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderDeposit != null" >
+        #{orderDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="payPrice != null" >
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=INTEGER},
+      </if>
+      <if test="bcircle != null" >
+        #{bcircle,jdbcType=INTEGER},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=INTEGER},
+      </if>
+      <if test="orderAddressId != null" >
+        #{orderAddressId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelivery != null" >
+        #{isDelivery,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTime != null" >
+        #{deliveryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsGiftId != null" >
+        #{goodsGiftId,jdbcType=INTEGER},
+      </if>
+      <if test="isLnvoice != null" >
+        #{isLnvoice,jdbcType=INTEGER},
+      </if>
+      <if test="lnvoiceTitle != null" >
+        #{lnvoiceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradePrice != null" >
+        #{tradePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ziyoutongLinshi != null" >
+        #{ziyoutongLinshi,jdbcType=INTEGER},
+      </if>
+      <if test="ziyoutong != null" >
+        #{ziyoutong,jdbcType=INTEGER},
+      </if>
+      <if test="orderGiftId != null" >
+        #{orderGiftId,jdbcType=INTEGER},
+      </if>
+      <if test="one != null" >
+        #{one,jdbcType=INTEGER},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=INTEGER},
+      </if>
+      <if test="deliver != null" >
+        #{deliver,jdbcType=INTEGER},
+      </if>
+      <if test="finishtime != null" >
+        #{finishtime,jdbcType=INTEGER},
+      </if>
+      <if test="bucket != null" >
+        #{bucket,jdbcType=INTEGER},
+      </if>
+      <if test="share != null" >
+        #{share,jdbcType=BIT},
+      </if>
+      <if test="youhui != null" >
+        #{youhui,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsGift != null" >
+        #{goodsGift,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="beizhu != null" >
+        #{beizhu,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sfbeizhu != null" >
+        #{sfbeizhu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>-->
+
+</mapper>

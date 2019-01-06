@@ -3,6 +3,7 @@ package com.zyl.water.mapper;
 
 import com.zyl.water.domain.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,6 +15,13 @@ public interface UserMapper {
      * @return
      */
     List<User> findAll();
+
+    /**
+     * 用户登录
+     * @param username
+     * @return
+     */
+    User getUser(@Param(value = "username") String username);
 
     /**
      * 新增用户名

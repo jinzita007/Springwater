@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyl.water.mapper.TcMapper" >
+  <resultMap id="BaseResultMap" type="com.zyl.water.domain.Tc" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tc_name" property="tcName" jdbcType="VARCHAR" />
+    <result column="tc_title" property="tcTitle" jdbcType="VARCHAR" />
+    <result column="tc_price" property="tcPrice" jdbcType="DECIMAL" />
+    <result column="tc_time" property="tcTime" jdbcType="INTEGER" />
+    <result column="tc_status" property="tcStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zyl.water.domain.TcWithBLOBs" extends="BaseResultMap" >
+    <result column="tc_water_set" property="tcWaterSet" jdbcType="LONGVARCHAR" />
+    <result column="tc_zp_set" property="tcZpSet" jdbcType="LONGVARCHAR" />
+    <result column="tc_detail" property="tcDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tc_name, tc_title, tc_price, tc_time, tc_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    tc_water_set, tc_zp_set, tc_detail
+  </sql>
+  <!-- 所有套餐列表 -->
+  <select id="findByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tc
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tc
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tc
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zyl.water.domain.TcWithBLOBs" >
+    insert into tc (id, tc_name, tc_title, 
+      tc_price, tc_time, tc_status, 
+      tc_water_set, tc_zp_set, tc_detail
+      )
+    values (#{id,jdbcType=INTEGER}, #{tcName,jdbcType=VARCHAR}, #{tcTitle,jdbcType=VARCHAR}, 
+      #{tcPrice,jdbcType=DECIMAL}, #{tcTime,jdbcType=INTEGER}, #{tcStatus,jdbcType=INTEGER}, 
+      #{tcWaterSet,jdbcType=LONGVARCHAR}, #{tcZpSet,jdbcType=LONGVARCHAR}, #{tcDetail,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyl.water.domain.TcWithBLOBs" >
+    insert into tc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tcName != null" >
+        tc_name,
+      </if>
+      <if test="tcTitle != null" >
+        tc_title,
+      </if>
+      <if test="tcPrice != null" >
+        tc_price,
+      </if>
+      <if test="tcTime != null" >
+        tc_time,
+      </if>
+      <if test="tcStatus != null" >
+        tc_status,
+      </if>
+      <if test="tcWaterSet != null" >
+        tc_water_set,
+      </if>
+      <if test="tcZpSet != null" >
+        tc_zp_set,
+      </if>
+      <if test="tcDetail != null" >
+        tc_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tcName != null" >
+        #{tcName,jdbcType=VARCHAR},
+      </if>
+      <if test="tcTitle != null" >
+        #{tcTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tcPrice != null" >
+        #{tcPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tcTime != null" >
+        #{tcTime,jdbcType=INTEGER},
+      </if>
+      <if test="tcStatus != null" >
+        #{tcStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tcWaterSet != null" >
+        #{tcWaterSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tcZpSet != null" >
+        #{tcZpSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tcDetail != null" >
+        #{tcDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyl.water.domain.TcWithBLOBs" >
+    update tc
+    <set >
+      <if test="tcName != null" >
+        tc_name = #{tcName,jdbcType=VARCHAR},
+      </if>
+      <if test="tcTitle != null" >
+        tc_title = #{tcTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tcPrice != null" >
+        tc_price = #{tcPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="tcTime != null" >
+        tc_time = #{tcTime,jdbcType=INTEGER},
+      </if>
+      <if test="tcStatus != null" >
+        tc_status = #{tcStatus,jdbcType=INTEGER},
+      </if>
+      <if test="tcWaterSet != null" >
+        tc_water_set = #{tcWaterSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tcZpSet != null" >
+        tc_zp_set = #{tcZpSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tcDetail != null" >
+        tc_detail = #{tcDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zyl.water.domain.TcWithBLOBs" >
+    update tc
+    set tc_name = #{tcName,jdbcType=VARCHAR},
+      tc_title = #{tcTitle,jdbcType=VARCHAR},
+      tc_price = #{tcPrice,jdbcType=DECIMAL},
+      tc_time = #{tcTime,jdbcType=INTEGER},
+      tc_status = #{tcStatus,jdbcType=INTEGER},
+      tc_water_set = #{tcWaterSet,jdbcType=LONGVARCHAR},
+      tc_zp_set = #{tcZpSet,jdbcType=LONGVARCHAR},
+      tc_detail = #{tcDetail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyl.water.domain.Tc" >
+    update tc
+    set tc_name = #{tcName,jdbcType=VARCHAR},
+      tc_title = #{tcTitle,jdbcType=VARCHAR},
+      tc_price = #{tcPrice,jdbcType=DECIMAL},
+      tc_time = #{tcTime,jdbcType=INTEGER},
+      tc_status = #{tcStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

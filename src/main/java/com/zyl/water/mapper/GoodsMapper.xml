@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyl.water.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.zyl.water.domain.Goods" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_water_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_brand" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_price_list" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_water_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_rebate" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_gift_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_tickets" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_deposit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_px" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_xl" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_score" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_grade" jdbcType="TINYINT" javaType="java.lang.Byte" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zyl.water.domain.GoodsWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_water_title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_brand" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_price_list" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_water_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="goods_rebate" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_img" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_gift_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_tickets" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_deposit" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_px" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_xl" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_score" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_grade" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="goods_water_set" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="goods_detail" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="goods_img_list" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, goods_name, goods_title, goods_water_title, goods_brand, goods_price_list, 
+    goods_price, goods_water_price, goods_rebate, goods_num, goods_type, goods_time, 
+    goods_img, goods_gift_id, goods_tickets, goods_deposit, goods_status, goods_px, goods_xl, 
+    goods_score, score, goods_grade
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    goods_water_set, goods_detail, goods_img_list
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--商品信息的记录条总数-->
+  <select id="selectCount" resultType="Integer">
+    select count(id) from goods
+  </select>
+
+  <!-- 模糊查询商品信息的记录条总数 -->
+  <select id="fuzzQueryCount" resultType="Integer">
+    select count(id) AS total from goods
+    <where>
+      goods_name LIKE CONCAT('%',#{q},'%')
+    </where>
+  </select>
+
+  <!-- 查询商品信息列表-无分页 -->
+  <select id="selectByGoodsList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_brand = #{goodsBrand}
+  </select>
+  <!-- 所有商品信息 -->
+  <select id="findByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    <where>
+      <if test="q!=null">
+        goods_name LIKE CONCAT('%',#{q},'%')
+      </if>
+    </where>
+    ORDER BY id DESC
+  </select>
+  <!-- 根据商品类型 查询赠品-->
+  <select id="findByGift" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_type = 2 and goods_status = 1 order by goods_type ASC
+  </select>
+
+  <!-- 根据商品类型 查询商品 -->
+  <select id="findByGood" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_type = 1 and goods_status = 1 and goods_tickets = 1 order by goods_type ASC
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zyl.water.domain.GoodsWithBLOBs" >
+    insert into goods (id, pid, goods_name, 
+      goods_title, goods_water_title, goods_brand, 
+      goods_price_list, goods_price, goods_water_price, 
+      goods_rebate, goods_num, goods_type, 
+      goods_time, goods_img, goods_gift_id, 
+      goods_tickets, goods_deposit, goods_status, 
+      goods_px, goods_xl, goods_score, 
+      score, goods_grade, goods_water_set, 
+      goods_detail, goods_img_list)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
+      #{goodsTitle,jdbcType=VARCHAR}, #{goodsWaterTitle,jdbcType=VARCHAR}, #{goodsBrand,jdbcType=INTEGER}, 
+      #{goodsPriceList,jdbcType=DECIMAL}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsWaterPrice,jdbcType=DECIMAL}, 
+      #{goodsRebate,jdbcType=VARCHAR}, #{goodsNum,jdbcType=INTEGER}, #{goodsType,jdbcType=INTEGER}, 
+      #{goodsTime,jdbcType=INTEGER}, #{goodsImg,jdbcType=VARCHAR}, #{goodsGiftId,jdbcType=INTEGER}, 
+      #{goodsTickets,jdbcType=INTEGER}, #{goodsDeposit,jdbcType=INTEGER}, #{goodsStatus,jdbcType=INTEGER}, 
+      #{goodsPx,jdbcType=INTEGER}, #{goodsXl,jdbcType=INTEGER}, #{goodsScore,jdbcType=TINYINT}, 
+      #{score,jdbcType=INTEGER}, #{goodsGrade,jdbcType=TINYINT}, #{goodsWaterSet,jdbcType=LONGVARCHAR}, 
+      #{goodsDetail,jdbcType=LONGVARCHAR}, #{goodsImgList,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyl.water.domain.GoodsWithBLOBs" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsTitle != null" >
+        goods_title,
+      </if>
+      <if test="goodsWaterTitle != null" >
+        goods_water_title,
+      </if>
+      <if test="goodsBrand != null" >
+        goods_brand,
+      </if>
+      <if test="goodsPriceList != null" >
+        goods_price_list,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsWaterPrice != null" >
+        goods_water_price,
+      </if>
+      <if test="goodsRebate != null" >
+        goods_rebate,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="goodsTime != null" >
+        goods_time,
+      </if>
+      <if test="goodsImg != null" >
+        goods_img,
+      </if>
+      <if test="goodsGiftId != null" >
+        goods_gift_id,
+      </if>
+      <if test="goodsTickets != null" >
+        goods_tickets,
+      </if>
+      <if test="goodsDeposit != null" >
+        goods_deposit,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+      <if test="goodsPx != null" >
+        goods_px,
+      </if>
+      <if test="goodsXl != null" >
+        goods_xl,
+      </if>
+      <if test="goodsScore != null" >
+        goods_score,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="goodsGrade != null" >
+        goods_grade,
+      </if>
+      <if test="goodsWaterSet != null" >
+        goods_water_set,
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail,
+      </if>
+      <if test="goodsImgList != null" >
+        goods_img_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTitle != null" >
+        #{goodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWaterTitle != null" >
+        #{goodsWaterTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBrand != null" >
+        #{goodsBrand,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPriceList != null" >
+        #{goodsPriceList,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsWaterPrice != null" >
+        #{goodsWaterPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsRebate != null" >
+        #{goodsRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTime != null" >
+        #{goodsTime,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null" >
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsGiftId != null" >
+        #{goodsGiftId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTickets != null" >
+        #{goodsTickets,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDeposit != null" >
+        #{goodsDeposit,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPx != null" >
+        #{goodsPx,jdbcType=INTEGER},
+      </if>
+      <if test="goodsXl != null" >
+        #{goodsXl,jdbcType=INTEGER},
+      </if>
+      <if test="goodsScore != null" >
+        #{goodsScore,jdbcType=TINYINT},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="goodsGrade != null" >
+        #{goodsGrade,jdbcType=TINYINT},
+      </if>
+      <if test="goodsWaterSet != null" >
+        #{goodsWaterSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsImgList != null" >
+        #{goodsImgList,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyl.water.domain.GoodsWithBLOBs" >
+    update goods
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTitle != null" >
+        goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsWaterTitle != null" >
+        goods_water_title = #{goodsWaterTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBrand != null" >
+        goods_brand = #{goodsBrand,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPriceList != null" >
+        goods_price_list = #{goodsPriceList,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsWaterPrice != null" >
+        goods_water_price = #{goodsWaterPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsRebate != null" >
+        goods_rebate = #{goodsRebate,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTime != null" >
+        goods_time = #{goodsTime,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImg != null" >
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsGiftId != null" >
+        goods_gift_id = #{goodsGiftId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsTickets != null" >
+        goods_tickets = #{goodsTickets,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDeposit != null" >
+        goods_deposit = #{goodsDeposit,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPx != null" >
+        goods_px = #{goodsPx,jdbcType=INTEGER},
+      </if>
+      <if test="goodsXl != null" >
+        goods_xl = #{goodsXl,jdbcType=INTEGER},
+      </if>
+      <if test="goodsScore != null" >
+        goods_score = #{goodsScore,jdbcType=TINYINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="goodsGrade != null" >
+        goods_grade = #{goodsGrade,jdbcType=TINYINT},
+      </if>
+      <if test="goodsWaterSet != null" >
+        goods_water_set = #{goodsWaterSet,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsImgList != null" >
+        goods_img_list = #{goodsImgList,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zyl.water.domain.GoodsWithBLOBs" >
+    update goods
+    set pid = #{pid,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_water_title = #{goodsWaterTitle,jdbcType=VARCHAR},
+      goods_brand = #{goodsBrand,jdbcType=INTEGER},
+      goods_price_list = #{goodsPriceList,jdbcType=DECIMAL},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_water_price = #{goodsWaterPrice,jdbcType=DECIMAL},
+      goods_rebate = #{goodsRebate,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=INTEGER},
+      goods_time = #{goodsTime,jdbcType=INTEGER},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_gift_id = #{goodsGiftId,jdbcType=INTEGER},
+      goods_tickets = #{goodsTickets,jdbcType=INTEGER},
+      goods_deposit = #{goodsDeposit,jdbcType=INTEGER},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
+      goods_px = #{goodsPx,jdbcType=INTEGER},
+      goods_xl = #{goodsXl,jdbcType=INTEGER},
+      goods_score = #{goodsScore,jdbcType=TINYINT},
+      score = #{score,jdbcType=INTEGER},
+      goods_grade = #{goodsGrade,jdbcType=TINYINT},
+      goods_water_set = #{goodsWaterSet,jdbcType=LONGVARCHAR},
+      goods_detail = #{goodsDetail,jdbcType=LONGVARCHAR},
+      goods_img_list = #{goodsImgList,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyl.water.domain.Goods" >
+    update goods
+    set pid = #{pid,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_title = #{goodsTitle,jdbcType=VARCHAR},
+      goods_water_title = #{goodsWaterTitle,jdbcType=VARCHAR},
+      goods_brand = #{goodsBrand,jdbcType=INTEGER},
+      goods_price_list = #{goodsPriceList,jdbcType=DECIMAL},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_water_price = #{goodsWaterPrice,jdbcType=DECIMAL},
+      goods_rebate = #{goodsRebate,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=INTEGER},
+      goods_time = #{goodsTime,jdbcType=INTEGER},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      goods_gift_id = #{goodsGiftId,jdbcType=INTEGER},
+      goods_tickets = #{goodsTickets,jdbcType=INTEGER},
+      goods_deposit = #{goodsDeposit,jdbcType=INTEGER},
+      goods_status = #{goodsStatus,jdbcType=INTEGER},
+      goods_px = #{goodsPx,jdbcType=INTEGER},
+      goods_xl = #{goodsXl,jdbcType=INTEGER},
+      goods_score = #{goodsScore,jdbcType=TINYINT},
+      score = #{score,jdbcType=INTEGER},
+      goods_grade = #{goodsGrade,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

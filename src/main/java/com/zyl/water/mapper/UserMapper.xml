@@ -23,6 +23,11 @@
         SELECT * FROM user_member
     </select>
 
+    <!--根据用户查询用户名-->
+    <select id="getUser" resultType="User">
+        SELECT username, password FROM water_ucenter_member WHERE username=#{username}
+    </select>
+
     <!-- 新增用户名 -->
     <!--ALTER TABLE `user_member` CHANGE `reg_time` `reg_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间';-->
     <insert id="addUser" parameterType="User">

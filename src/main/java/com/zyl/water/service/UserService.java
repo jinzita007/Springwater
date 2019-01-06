@@ -26,6 +26,16 @@ public class UserService {
     }
 
     /**
+     * 用户登录
+     * @param user
+     * @return
+     */
+    public User getUser(User user) {
+        //通过用户名获取用户
+        return userMapper.getUser(user.getUsername());
+    }
+
+    /**
      * 新增用户
      * @param user
      */

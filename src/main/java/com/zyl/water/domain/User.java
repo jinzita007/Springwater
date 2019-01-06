@@ -1,8 +1,5 @@
 package com.zyl.water.domain;
 
-import io.swagger.models.auth.In;
-
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 /**

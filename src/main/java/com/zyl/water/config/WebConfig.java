@@ -6,18 +6,25 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+
 @Configuration
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter{
+
     /**
      * 允许请求CORS跨域
-     * @param registry
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
+        registry
+                .addMapping("/**")
                 .allowedOrigins("*")
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS");
+                .allowedMethods("GET", "POST","PUT", "DELETE", "PATCH", "HEAD", "OPTIONS")
+                .allowedHeaders("Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .allowCredentials(true)
+                .maxAge(3600);
+
     }
 
     /**
@@ -31,6 +38,13 @@ public class WebConfig extends WebMvcConfigurerAdapter{
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        //将所有/static/** 访问都映射到classpath:/static/ 目录下
+
+       registry.addResourceHandler("/image/**").addResourceLocations("classpath:/static/image/");
+       super.addResourceHandlers(registry);
+
     }
+
 
 }
